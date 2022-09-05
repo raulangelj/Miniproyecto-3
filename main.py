@@ -9,6 +9,9 @@ import numpy_financial as nf
 
 # %%
 # Ejercicio 3.1
+def normal(mues, sigmas):
+	return [np.random.normal(mues[i], sigmas[i]) for i in range(len(mues))]
+
 def valor_presente_neto(iterations):
 	resh = 0
 	rescc = 0
@@ -39,6 +42,10 @@ def valor_presente_neto(iterations):
 	print("Promedio de hoteles: ",promedioh)
 	print("Promedio de Centro Comercial: ",promediocc)
 
+mues_hoteles = [-800, -800, -700, 300, 400, 500, 2000]
+sigmas_hoteles = [50, 100, 150, 200, 200, 200, 8440]
+mues_cc = [-600, -200, -600, 250, 350, 400, 1600]
+sigmas_cc = [50, 50, 100, 150, 150, 150, 6000]
 valor_presente_neto(100)
 valor_presente_neto(1000)
 valor_presente_neto(10000)
