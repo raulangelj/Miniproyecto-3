@@ -73,57 +73,40 @@ posible = [9, 10, 11]
 probabilities = [0.3, 0.4, 0.3]
 
 def buy_papers(posibilities, probabilities, iterations):
-	average = 0
+	# set our prices and costs
 	bought = 9
 	price_bought = 1.5
 	price_sold = 2.5
 	price_not_sold = 0.5
-	# ganancia 
+	# initialize our variables
 	revenue = 0
-	# total de ventas
 	total_sales = 0
-	# dinero devoliciones
 	refund = 0
-	# cantidad que tuvimos que devolver
 	quantity_refund = 0
-	# ganancia total
 	total = 0
-	# perdida por no cubrir
 	loss = 0
-	# cantidad de ventas que no hicimos
 	quantity_loss = 0
-	# lo que gaste
 	total_cost = 0
-
-	# para cuando compro 9 periodicos
 	print(f'========================= Para {iterations} dias =========================')
-	while bought <= 11:
+	# iterate for 9, 10, 11 that simulate the number of papers we bought
+	for bought in range(9, 12):
+		# iterate for the number of days
 		for _ in range(iterations):
-			# obtenemos la cantidad que gastamos por comprar periodicos
+			# get the number of papers we sold
 			total_cost += bought * price_bought
-			# obtenemos el valor
+			# get the number of papers that people want
 			papers_asked = random.choices(posibilities, weights=probabilities, k=1)[0]
-			# obtenemos las ganancias de los que me pidieron y se vendieron
 			revenue += papers_asked * price_sold
-			# revenue += papers_asked * (price_sold - price_bought) if papers_asked <= bought else bought * (price_sold - price_bought)
-			total_sales += papers_asked if papers_asked <= bought else bought
-			# print('revenue', revenue)
-			# obtenemos las devoluciones de los que no se vendieron
-			refund += ((bought - papers_asked) * price_not_sold) if papers_asked < bought else 0
+			# get the number of papers we sold
+			total_sales += min(papers_asked, bought)
+			# get the refun we get from the papers we didn't sell
+			refund += (bought - papers_asked) * price_not_sold if papers_asked < bought else 0
+			# get the number of papers we didn't sold
 			quantity_refund += bought - papers_asked if papers_asked < bought else 0
-			# refund += ((bought - papers_asked) * price_not_sold) if papers_asked <= bought else 0
-			# quantity_refund += bought - papers_asked if papers_asked <= bought else 0
-			# print('refund', refund)
-			# obtenemos la perdida por no cubrir si se pidieron mas de los que se compraron
-			# loss += (papers_asked - bought) * price_bought if papers_asked > bought else 0
-			# # si lo que pidieron es menor a lo que se compro sumamos a loss el valor de lo que se pidio
-			# loss += papers_asked * (price_bought - price_not_sold) if papers_asked < bought else 0
-			# loss += abs((papers_asked - bought) * (price_bought - price_not_sold))
+			# get the loss we get from the papers we didn't sell
 			quantity_loss += papers_asked - bought if papers_asked > bought else 0
 			loss += (papers_asked - bought) * price_sold if papers_asked > bought else 0
-			# loss += (papers_asked - bought) * (price_bought - price_not_sold) if papers_asked > bought else 0
-			# quantity_loss += papers_asked - bought if papers_asked > bought else 0
-			# print('loss', loss)
+		# print the results
 		print(f'============== cuando compro {bought} periodicos ==============')
 		print('Ganancias', revenue)
 		print('Devoluciones', refund)
@@ -132,12 +115,11 @@ def buy_papers(posibilities, probabilities, iterations):
 		print('Cantidad de devoluciones', quantity_refund)
 		print('Cantidad que gaste', total_cost)
 		print('Total de perdidas', quantity_loss)
-		# obtenemos la ganancia total
-		total += (total_sales * price_sold) - total_cost + quantity_refund * price_not_sold - quantity_loss * (price_sold - price_bought)
-		# total += revenue - total_cost + quantity_refund * price_not_sold - quantity_loss * (price_sold - price_bought)
-		# total += revenue + refund - loss 
-		print('\tGanancia total (Gancias menos los costos de compra + los rembolsos):', total)
-		# reiniciamos los valores
+		# get the total of money we get from the sales and the ones we didn't sell
+		total += total_sales * price_sold - total_cost + quantity_refund * price_not_sold - quantity_loss * (price_sold - price_bought)
+		# print the total of money we get
+		print('\tGanancia total (Gancias menos los costos de compra + los rembolsos - las ventas que deje pasar):', total)
+		# reset our variables
 		revenue = 0
 		refund = 0
 		total = 0
@@ -146,72 +128,13 @@ def buy_papers(posibilities, probabilities, iterations):
 		total_sales = 0
 		quantity_refund = 0
 		total_cost = 0
-
+		# add one to the number of papers we bought
 		bought += 1
 
-	# papers_asked = 9
-	# print(papers_asked)
-	# # obtenemos las ganancias de los que me pidieron y se vendieron
-	# revenue = papers_asked * (price_sold - price_bought) if papers_asked <= bought else bought * (price_sold - price_bought)
-	# print('revenue', revenue)
-	# # obtenemos las devoluciones de los que no se vendieron
-	# refund = (bought - papers_asked) * price_not_sold if papers_asked <= bought else 0
-	# print('refund', refund)
-	# # obtenemos la perdida por no cubrir
-	# loss = abs((papers_asked - bought) * (price_bought - price_not_sold))
-	# print('loss', loss)
-	# # obtenemos la ganancia total
-	# total = revenue + refund - loss
-	# print('total', total)
-
-	# papers_asked = 10
-	# print(papers_asked)
-	# # obtenemos las ganancias de los que me pidieron y se vendieron
-	# revenue = papers_asked * (price_sold - price_bought) if papers_asked <= bought else bought * (price_sold - price_bought)
-	# print('revenue', revenue)
-	# # obtenemos las devoluciones de los que no se vendieron
-	# refund = (bought - papers_asked) * price_not_sold if papers_asked <= bought else 0
-	# print('refund', refund)
-	# # obtenemos la perdida por no cubrir
-	# loss = abs((papers_asked - bought) * (price_bought - price_not_sold))
-	# print('loss', loss)
-	# # obtenemos la ganancia total
-	# total = revenue + refund - loss
-	# print('total', total)
-
-	# papers_asked = 11
-	# print(papers_asked)
-	# # obtenemos las ganancias de los que me pidieron y se vendieron
-	# revenue = papers_asked * (price_sold - price_bought) if papers_asked <= bought else bought * (price_sold - price_bought)
-	# print('revenue', revenue)
-	# # obtenemos las devoluciones de los que no se vendieron
-	# refund = (bought - papers_asked) * price_not_sold if papers_asked <= bought else 0
-	# print('refund', refund)
-	# # obtenemos la perdida por no cubrir
-	# loss = abs((papers_asked - bought) * (price_bought - price_not_sold))
-	# print('loss', loss)
-	# # obtenemos la ganancia total
-	# total = revenue + refund - loss
-	# print('total', total)
-
-	# # asumir que todos los dias compro 10 luego 9 luego 11 y ver cual es el mejor
-	# while bought <= 11:
-	# 	for _ in range(iterations):
-	# 		# obtenemos el valor
-	# 		choice = random.choices(posibilities, weights=probabilities, k=1)[0]
-	# 		# sumamos el valor
-	# 		average += choice
-	# 		# ver cuantos salen de cada unorderable_list_difference
-
-
-
-
-	# obtenemos el promedio
-	# average = average/iterations
-	# print(f'========================= Los resultados con {iterations} iteraciones son =========================')
-	# print("Promedio de periódicos comprados: ",average)
-
+# simultate for 30 days
 buy_papers(posible, probabilities, 30)
+# simultate for 365 days ( 1mes )
 buy_papers(posible, probabilities, 365)
+# simultate for 3650 days ( 10 años )
 buy_papers(posible, probabilities, 3650)
 # %%
