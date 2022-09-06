@@ -133,7 +133,8 @@ def buy_papers(posibilities, probabilities, iterations):
 		print('Cantidad que gaste', total_cost)
 		print('Total de perdidas', quantity_loss)
 		# obtenemos la ganancia total
-		total += revenue - total_cost + quantity_refund * price_not_sold
+		total += (total_sales * price_sold) - total_cost + quantity_refund * price_not_sold - quantity_loss * (price_sold - price_bought)
+		# total += revenue - total_cost + quantity_refund * price_not_sold - quantity_loss * (price_sold - price_bought)
 		# total += revenue + refund - loss 
 		print('\tGanancia total (Gancias menos los costos de compra + los rembolsos):', total)
 		# reiniciamos los valores
