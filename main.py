@@ -11,20 +11,16 @@ import numpy_financial as nf
 
 # %%
 # Ejercicio 3.1
-def normal(mues, sigmas):
-	"""
-	Obtenemos una lista de valores aleatorios con distribucion normal
-	"""
-	return [np.random.normal(mues[i], sigmas[i]) for i in range(len(mues))]
-
 def valor_presente_neto(iterations):
 	"""
 	Genera una lista de valores presentes netos
 	"""
+	# seteamos nuestros promedios iniciales
 	resh = 0
 	rescc = 0
+	# iteramos para el numero que nos dan
 	for _ in range(iterations):
-		#saca probabilidad de hotel
+		#saca probabilidad de hotel (mue y sigma son de la hoja)
 		h1 = np.random.normal(-800, 50)
 		h2 = np.random.normal(-800, 100)
 		h3 = np.random.normal(-700, 150)
@@ -32,7 +28,7 @@ def valor_presente_neto(iterations):
 		h5 = np.random.normal(400, 200)
 		h6 = np.random.normal(500, 200)
 		h7 = np.random.uniform(200, 8440)
-		#saca probabilidad de centro comercial CC
+		#saca probabilidad de centro comercial CC (mue y sigma son de la hoja)
 		cc1 = np.random.normal(-600, 50)
 		cc2 = np.random.normal(-200, 50)
 		cc3 = np.random.normal(-600, 100)
@@ -43,23 +39,23 @@ def valor_presente_neto(iterations):
 		# sacamos el net present value de cada uno
 		rh = nf.npv(0.1, [-800, h1, h2, h3, h4, h5, h6, h7])
 		rcc = nf.npv(0.1,[-900, cc1, cc2, cc3, cc4, cc5, cc6, cc7])
+		# sumamos los valores
 		resh += rh
 		rescc += rcc
 	# obtenemos el promedio de cada uno
 	promedioh = resh/iterations
 	promediocc = rescc/iterations
+	# imprimimos los resultados
 	print(f'========================= Los resultados con {iterations} iteraciones son =========================')
 	print("Promedio de hoteles: ",promedioh)
 	print("Promedio de Centro Comercial: ",promediocc)
 
-# nuestros mues y sigmas
-mues_hoteles = [-800, -800, -700, 300, 400, 500, 2000]
-sigmas_hoteles = [50, 100, 150, 200, 200, 200, 8440]
-mues_cc = [-600, -200, -600, 250, 350, 400, 1600]
-sigmas_cc = [50, 50, 100, 150, 150, 150, 6000]
-# obtenemos los datos
+
+# obtenemos los datos 100 veces
 valor_presente_neto(100)
+# obtenemos los datos de 1000 veces
 valor_presente_neto(1000)
+# obtenemos los datos de 10000 veces
 valor_presente_neto(10000)
 # %%
 # sabe que el 30% de los días le piden 9,el40%delosdíaslepiden10yel30%delosdíasle
