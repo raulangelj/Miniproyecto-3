@@ -8,7 +8,34 @@ import random
 from unittest.util import unorderable_list_difference
 import numpy as np
 import numpy_financial as nf
+import matplotlib.pyplot as plt
 
+
+# %%
+# Ejercicio 2
+# variable aleatoria: hayan 3 giros a la izquierda de 3 bifurcaciones
+probability_distribution = {
+  0: 2/4,
+  1: 3/4,
+  2: 1,
+}
+
+def values_generator(iterations, distribution):
+  values = []
+  for _ in range(iterations):
+    random_num = random.uniform(0, 1)
+    for i in distribution:
+      if (random_num <= distribution[i]):
+        values.append(distribution[i])
+        break
+  
+  plt.xlabel('PROBABILITY')
+  plt.ylabel('TOTAL EVENTS')
+  plt.hist(values)
+  plt.show()
+
+
+values_generator(1000, probability_distribution)
 # %%
 # Ejercicio 3.1
 def valor_presente_neto(iterations):
